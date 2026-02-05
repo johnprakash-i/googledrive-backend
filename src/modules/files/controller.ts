@@ -38,13 +38,14 @@ export const getDownloadUrl = async (req: AuthRequest, res: Response) => {
 };
 
 export const listFiles = async (req: AuthRequest, res: Response) => {
-  const { search = '', page = 1, limit = 10 } = req.query;
+  const { search = '', page = 1, limit = 10, folderId } = req.query;
 
   const files = await listFilesService(
     req.user.id,
     search as string,
     Number(page),
     Number(limit),
+    folderId as string | undefined,
   );
 
   res.json({

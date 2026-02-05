@@ -10,15 +10,28 @@ export const listFiles = (
   search: string,
   skip: number,
   limit: number,
-) =>
-  File.find({
+  folderId?: string | null,
+) => {
+  const query: any = {
     ownerId,
     isDeleted: false,
-    name: { $regex: search, $options: 'i' },
-  })
+  };
+  
+  // Add search filter if provided
+  if (search) {
+    query.name = { $regex: search, $options: 'i' };
+  }
+  
+  // Add folderId filter if provided
+  if (folderId !== undefined) {
+    query.folderId = folderId;
+  }
+  
+  return File.find(query)
     .skip(skip)
     .limit(limit)
     .sort({ createdAt: -1 });
+};
 
 export const findFileByIdIncludingDeleted = (fileId: string) =>
   File.findById(fileId);

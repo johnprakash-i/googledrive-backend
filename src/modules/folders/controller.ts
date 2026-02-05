@@ -13,7 +13,12 @@ export const createFolder = async (req: AuthRequest, res: Response) => {
 };
 
 export const listFolders = async (req: AuthRequest, res: Response) => {
-  const folders = await listFoldersService(req.user.id);
+  const { parentId } = req.query;
+  
+  const folders = await listFoldersService(
+    req.user.id, 
+    parentId as string | undefined
+  );
 
   res.json({
     success: true,

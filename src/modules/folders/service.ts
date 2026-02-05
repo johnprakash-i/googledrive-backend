@@ -1,7 +1,7 @@
 import { ApiError } from '../../common/errors/ApiError';
 import { createFolder, findFolderById, listFoldersByOwner } from './repository';
 import { CreateFolderDTO } from './types';
-
+import Folder from './model';
 export const createFolderService = async (
   ownerId: string,
   data: CreateFolderDTO,
@@ -14,5 +14,12 @@ export const createFolderService = async (
   return createFolder({ ...data, ownerId });
 };
 
-export const listFoldersService = async (ownerId: string) =>
-  listFoldersByOwner(ownerId);
+export const listFoldersService = async (ownerId: string, parentId?: string | null) => {
+  const query: any = { ownerId, isDeleted: false };
+  
+  if (parentId !== undefined) {
+    query.parentId = parentId;
+  }
+  
+  return Folder.find(query);
+};

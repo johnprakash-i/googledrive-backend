@@ -43,14 +43,17 @@ export const getDownloadUrlService = async (fileId: string, userId: string) => {
   const url = await getSignedUrl(s3, command, { expiresIn: 300 });
   return { url };
 };
+
+
 export const listFilesService = async (
   userId: string,
   search = '',
   page = 1,
   limit = 10,
+  folderId?: string | null,
 ) => {
   const skip = (page - 1) * limit;
-  return listFiles(userId, search, skip, limit);
+  return listFiles(userId, search, skip, limit, folderId);
 };
 
 
