@@ -13,15 +13,10 @@ import { env } from './config/env.config';
 
 const app = express();
 
-/**
- * ✅ CORS CONFIGURATION (MUST BE FIRST)
- * Allows frontend to send:
- * - Authorization headers
- * - Cookies (refresh token)
- */
+
 app.use(
   cors({
-    origin: env.CLIENT_URL, // e.g. http://localhost:5173
+    origin: env.CLIENT_URL, 
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
