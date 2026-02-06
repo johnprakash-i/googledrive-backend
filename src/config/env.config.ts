@@ -27,4 +27,5 @@ export const env = {
     process.env.EMAIL_FROM || `Google Drive Clone <${process.env.EMAIL_USER}>`,
 
   CLIENT_URL: process.env.CLIENT_URL as string,
+  RESEND_API_KEY:process.env.RESEND_API_KEY as string,
 };

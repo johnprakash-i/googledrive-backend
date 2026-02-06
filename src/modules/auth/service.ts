@@ -25,15 +25,46 @@ export const registerService = async (data: RegisterDTO) => {
 
   const token = signActivationToken(user.id);
   const link = `${env.CLIENT_URL}/activate/${token}`;
-  console.log(link);
   await sendEmail(
     user.email,
-    'Activate Account',
-    `<p>Activate account:</p><a href="${link}">Click to Activate</a>`,
+    'Activate Your Account',
+    `
+  <div style="font-family: Arial, sans-serif; background-color: #f0fdf4; padding: 30px; text-align: center;">
+    <div style="max-width: 500px; margin: auto; background: #ffffff; border-radius: 10px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+      
+      <h2 style="color: #16a34a; margin-bottom: 10px;">Welcome 🎉</h2>
+      
+      <p style="color: #374151; font-size: 15px; line-height: 1.6;">
+        Thanks for registering! Please confirm your email address to activate your account.
+      </p>
+
+      <a href="${link}" 
+         style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #22c55e; color: white; text-decoration: none; border-radius: 6px; font-weight: bold;">
+         Activate Account
+      </a>
+
+      <p style="margin-top: 25px; font-size: 13px; color: #6b7280;">
+        If the button doesn’t work, copy and paste this link into your browser:
+      </p>
+
+      <p style="word-break: break-all; font-size: 12px; color: #16a34a;">
+        ${link}
+      </p>
+
+      <hr style="margin: 25px 0; border: none; border-top: 1px solid #e5e7eb;" />
+
+      <p style="font-size: 12px; color: #9ca3af;">
+        If you didn’t create this account, you can safely ignore this email.
+      </p>
+
+    </div>
+  </div>
+  `,
   );
 
   return {
-    message: 'Registration successful. Please activate your account.',
+    message:
+      'Registration successful! Please check your email to activate your account. If you don’t see it in your inbox, be sure to check your spam or promotions folder.',
   };
 };
 
@@ -95,13 +126,46 @@ export const forgotPasswordService = async (email: string) => {
 
   const resetLink = `${env.CLIENT_URL}/reset-password/${rawToken}`;
 
-  await sendEmail(
-    user.email,
-    'Password Reset',
-    `<p>Reset password:</p><a href="${resetLink}">${resetLink}</a>`,
-  );
+await sendEmail(
+  user.email,
+  'Reset Your Password',
+  `
+  <div style="font-family: Arial, sans-serif; background-color: #f0fdf4; padding: 30px; text-align: center;">
+    <div style="max-width: 500px; margin: auto; background: #ffffff; border-radius: 10px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+      
+      <h2 style="color: #16a34a; margin-bottom: 10px;">Password Reset Requested 🔐</h2>
+      
+      <p style="color: #374151; font-size: 15px; line-height: 1.6;">
+        We received a request to reset your password. Click the button below to set a new password.
+      </p>
 
-  return { message: 'Password reset email sent' };
+      <a href="${resetLink}" 
+         style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #22c55e; color: white; text-decoration: none; border-radius: 6px; font-weight: bold;">
+         Reset Password
+      </a>
+
+      <p style="margin-top: 25px; font-size: 13px; color: #6b7280;">
+        If the button doesn’t work, copy and paste this link into your browser:
+      </p>
+
+      <p style="word-break: break-all; font-size: 12px; color: #16a34a;">
+        ${resetLink}
+      </p>
+
+      <hr style="margin: 25px 0; border: none; border-top: 1px solid #e5e7eb;" />
+
+      <p style="font-size: 12px; color: #9ca3af;">
+        If you didn’t request a password reset, you can safely ignore this email.
+      </p>
+
+    </div>
+  </div>
+  `
+);
+
+return {
+  message: 'A password reset email has been sent! Please check your inbox (and spam folder if needed) to complete the process.',
+};
 };
 
 /* ================= RESET PASSWORD ================= */
