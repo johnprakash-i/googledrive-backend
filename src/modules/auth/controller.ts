@@ -8,10 +8,16 @@ import {
   forgotPasswordService,
 } from './service';
 
+// const COOKIE_OPTIONS = {
+//   httpOnly: true,
+//   secure: false,
+//   sameSite: 'lax' as const,
+//   path: '/',
+// };
 const COOKIE_OPTIONS = {
   httpOnly: true,
-  secure: false, // true in production (HTTPS)
-  sameSite: 'lax' as const,
+  secure: true,
+  sameSite: 'none' as const,
   path: '/',
 };
 
